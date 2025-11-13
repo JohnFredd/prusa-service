@@ -1,0 +1,18 @@
+# Usa la imagen base publicada en Docker Hub
+FROM mikeah/prusaslicer-novnc:latest
+
+# Crea directorios para configuración y archivos de impresión
+RUN mkdir -p /configs /prints
+
+# Copia tu bundle de configuración local al contenedor
+# Asume que tienes una carpeta local llamada "mi_configuracion" con los archivos de PrusaSlicer
+COPY mi_configuracion/ /configs/
+
+# Establece variables de entorno necesarias
+ENV SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
+
+# Expone los puertos necesarios
+EXPOSE 8080 5900
+
+# Comando por defecto (heredado de la imagen base)
+CMD ["/usr/bin/supervisord"]
